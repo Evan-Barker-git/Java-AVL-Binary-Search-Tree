@@ -1,0 +1,90 @@
+// Define the BinarySearchTree class
+public class BinarySearchTree {
+    // Create the class (blueprint/template) for a BinarySearchTree object.
+    // Each instance (object) will have an instance variable (field) "root" of the Node class.
+    // The "root" acts as the central or highest "parent" node.
+    Node root;
+
+    // Define the DEFAULT constructor method for the BinarySearchTreeClass
+    public BinarySearchTree() {
+        // Initialize root to null
+        root = null;
+    }
+
+    // Public setter method
+    public void addNode(int key) {
+        this.root = insert(this.root, key);
+    }
+
+    // Method to insert a new node with the given key
+    private Node insert(Node currentNode, int key) {
+        // If tree is empty, return new node.
+        if (currentNode == null) {
+            return new Node(key);
+        }
+
+        // If key is present in tree, just return the node itself
+        if (currentNode.key == key) {
+            return currentNode;
+        }
+
+        // Otherwise traverse tree
+        if (key < currentNode.key) {
+            currentNode.left = insert(currentNode.left, key); // Traverse left if value less than currentNode
+        }
+        else {
+            currentNode.right = insert(currentNode.right, key); // Traverse right if value greater than currentNode
+        }
+
+        // Return unchanged if all else fails.
+        return currentNode;
+    }
+
+    // Public inOrder view getter method
+    public void viewInOrder(){
+        inorder(this.root);
+    }
+
+    // Private InOrder view
+    private void inorder(Node currentNode) {
+        if (currentNode != null) {
+            inorder(currentNode.left);
+            System.out.print(currentNode.key + " ");
+            inorder(currentNode.right);
+        }
+    }
+
+    // Public PreOrder view getter method
+    public void viewPreOrder(){
+        preorder(this.root);
+    }
+
+    // Private PreOrder view
+    private void preorder(Node currentNode) {
+        if (currentNode != null) {
+            System.out.print(currentNode.key + " ");
+            preorder(currentNode.left);
+            preorder(currentNode.right);
+        }
+    }
+
+
+}
+// Define the Node class
+class Node {
+    // Create the class (blueprint/template) for a Node object.
+    // Each Node instance (object) will have an instance variable (field) "key" of type int.
+    // Each Node instance (object) will have 2 instance variables "left" and "right"
+    // "left" and "right" hold references to the instance's children Nodes.
+    int key;
+    Node left, right;
+
+    // Define the constructor method for the Node class.
+    public Node(int item) {
+        // Initializes a new Node Object.
+        // The "key" instance variable is set to the provided "item" int value.
+        // The "left" and "right" instance variables are initialized to null.
+        key = item;
+        left = right = null;
+    }
+}

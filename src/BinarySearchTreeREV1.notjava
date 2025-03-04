@@ -1,0 +1,111 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Define the BinarySearchTree class
+public class BinarySearchTree {
+    // Create the class (blueprint/template) for a BinarySearchTree object.
+    // Each instance (object) will have an instance variable (field) "root" of the Node class.
+    // The "root" acts as the central or highest "parent" node.
+    Node root;
+
+    // Define the DEFAULT constructor method for the BinarySearchTreeClass
+    public BinarySearchTree() {
+        // Initialize root to null
+        root = null;
+    }
+
+    public void viewTree(){
+        System.out.println("[ "+ this.root.key + " ]");
+        if (this.root.left != null) {
+            System.out.print("left " + this.root.left.key);
+        }
+        if (this.root.right != null) {
+            System.out.print("right " + this.root.right.key);
+        }
+    }
+
+    public void addNode(int key) {
+        Node currentNode = this.root;
+        Node parentNode = null;
+
+        // Check if tree is empty. If so then add new key and return.
+        if (this.root == null) {
+            System.out.println("This tree has no root. Adding " + key + " as root value.");
+            this.root = new Node(key);
+            return;
+        }
+
+        // Perform Compare Operation
+        while (currentNode != null) {
+            parentNode = currentNode;
+            if (key == currentNode.key) {
+                System.out.println("Key " + key + " already exists. Ignoring add request.");// Key found and exists
+            } else if (key < currentNode.key) {
+                if (currentNode.left == null) {
+                    currentNode.left = new Node(key);
+                    break;
+                } else {
+                    currentNode = currentNode.left;
+                }
+            } else {
+                if (currentNode.right == null) {
+                    currentNode.right = new Node(key);
+                    break;
+                } else {
+                    currentNode = currentNode.right;
+                }
+            }
+        }
+    }
+
+    public void viewPreOrder(){
+        Node currentNode = this.root;
+        Node parentNode = null;
+        List<Integer> treeView = new ArrayList<>();
+        boolean treeDone = false;
+
+        while (treeDone == false){
+            if (currentNode != null){
+                treeView.add(currentNode.key);
+                System.out.println("preorderview" + currentNode.key);
+            } else {
+                currentNode = parentNode;
+            }
+
+            currentNode = traverseTree(currentNode);
+            if (currentNode != null){
+                parentNode = currentNode;
+            }
+        }
+
+    }
+    private Node traverseTree(Node currentNode){
+        if (currentNode == null){
+            return null;
+        }
+        if (currentNode.left != null){
+            return currentNode.left;
+        } else if (currentNode.right != null) {
+            return currentNode.right;
+        } else
+            return currentNode;
+    }
+}
+// Define the Node class
+class Node {
+    // Create the class (blueprint/template) for a Node object.
+    // Each Node instance (object) will have an instance variable (field) "key" of type int.
+    // Each Node instance (object) will have 2 instance variables "left" and "right"
+    // "left" and "right" hold references to the instance's children Nodes.
+    int key;
+    Node left, right;
+
+    // Define the constructor method for the Node class.
+    public Node(int item) {
+        // Initializes a new Node Object.
+        // The "key" instance variable is set to the provided "item" int value.
+        // The "left" and "right" instance variables are initialized to null.
+        key = item;
+        left = right = null;
+    }
+}
